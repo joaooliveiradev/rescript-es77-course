@@ -1,0 +1,9 @@
+{
+  "name": "language-overview",
+  "dependencies": {
+    "rescript": "^10.0.1"
+  },
+  "scripts": {
+    "res:start": "rescript build -w"
+  }
+}
