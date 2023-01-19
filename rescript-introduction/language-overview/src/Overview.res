@@ -96,5 +96,68 @@ let someProfile = {
 }
 
 //Phantom type
-type t;
+type t
 
+//ADT'S || Variants
+type cardInfo = {
+  name: string,
+  ammount: int,
+}
+
+type cardType = CreditCard(cardInfo) | DebitCard(cardInfo)
+
+let getCard = (card: cardType) => {
+  switch card {
+  | CreditCard({name}) => `Your name is ${name} and you have an credit card`
+  | DebitCard({name}) => `Your name is ${name} and you have an debit card`
+  }
+}
+
+let userCard = CreditCard({name: "John", ammount: 10})
+
+let card = getCard(userCard)
+
+//Poly Variants
+type profilePoly = {
+  name: string,
+  age: int,
+  role: string,
+}
+
+let userProfileWithPoly = #admin({
+  name: "JohnPoly",
+  age: 10,
+  role: "admin",
+})
+
+let getProfilePoly = role => {
+  switch role {
+  | #user => "Hello User"
+  | #admin({name, age, role}) =>
+    `Hello Admin with name ${name}, with age ${age->Belt.Int.toString} and with ${role} role`
+  }
+}
+
+let myProfilePoly = getProfilePoly(#user)
+
+//Function
+
+//Fn with Positional Args
+//An param can be optional with the =? put you need to make an pattern matching because is an option
+let makeProfile = (name, age, ~favoriteColor=?, ()): string => {
+  switch favoriteColor {
+  | Some(color) =>
+    `Your name is ${name} and your age is ${age->Belt.Int.toString} and your favorite color is ${color}`
+  | None => `Your name is ${name} and your age is ${age->Belt.Int.toString}`
+  }
+}
+
+//Rescript has auto curried functions so you can pass the params partially
+// if you don't want to curried functions by default, put an .(dot) in the params, ex: let fn = (. x, y, z ) => {}
+//More details: https://rescript-lang.org/docs/manual/latest/function
+
+//Curried example
+let makeAge = "John"->makeProfile
+let getProfile = 21->makeAge
+let profile = getProfile(~favoriteColor="White")()
+let profile2 = getProfile()
