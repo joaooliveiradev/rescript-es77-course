@@ -3,7 +3,6 @@
 //doenst export them, if the types are exported, i will catch
 open User_Types
 
-
 //In the Profile module i use include to receive the types from Profile_Types in the Profile and export all
 //With this, i catch the types here and match with the structure
 open Profile
@@ -15,5 +14,8 @@ let user: User_Types.user = {
 
 let profile = {
   email: "dsadsa@gmail.com",
-  password: "dsdasds"
+  password: "dsdasds",
 }
+
+Js.log(User.sayHelloUser(user))
+Js.log(Profile.sayHello(profile))
