@@ -1,0 +1,12 @@
+{
+  "name": "rescript-modules",
+  "sources": {
+    "dir": "src",
+    "subdirs": true
+  },
+  "package-specs": {
+    "module": "es6",
+    "suffix": ".mjs",
+    "in-source": true
+  }
+}

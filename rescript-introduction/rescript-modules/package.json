@@ -1,0 +1,9 @@
+{
+  "name": "rescript-modules",
+  "dependencies": {
+    "rescript": "^10.0.1"
+  },
+  "scripts": {
+    "res:start": "yarn rescript build -w"
+  }
+}
