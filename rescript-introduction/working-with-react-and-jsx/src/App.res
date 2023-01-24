@@ -27,13 +27,72 @@
 }
 */
 
+//Component with props
 module Message = {
   @react.component
   let make = (~msg) => <h1> {msg->React.string} </h1>
 }
 
+//Component with optional props
+module MessageOptional = {
+  @react.component
+  let make = (~id=?, ~message=?) => {
+    // if you want to pass an optional props to an attribute prop or something that accepts only string or any other type that isin't option
+    // you need to pass ? before the keyword like in this example
+    switch message {
+    | Some(msg) => <h1 ?id> {msg->React.string} </h1>
+    | None => React.null
+    }
+  }
+}
+
+module MessageDefaultValue = {
+  @react.component
+  let make = (~message="Default Value") => {
+    <h1> {message->React.string} </h1>
+  }
+}
+
+module ComponentWithChildren = {
+  @react.component
+  let make = (~children) => {
+    <h1> children </h1>
+  }
+}
+
+module MessageIsLoading = {
+  @react.component
+  let make = (~isLoading) => {
+    <h1> {(isLoading ? "Loading..." : "Loaded!")->React.string} </h1>
+  }
+}
+
+module MessageArrayComponent = {
+  let items = ["Hello", "World", "Foo", "Bar"]
+  let elements = Belt.Array.mapWithIndex(items, (key, item) =>
+    <h1 key={key->Js.Int.toString}> {item->React.string} </h1>
+  )
+
+  @react.component
+  let make = () => {
+    <div> {elements->React.array} </div>
+  }
+}
+
+module MessageWithRenderMap = {
+  let names = ["Jao", "Mendras", "Marcolino", "Fdachoque"]
+  open Render
+  @react.component
+  let make = () => Render.map(names, (item, key) => <h1 key={key}>{item}</h1>)
+}
+
 @react.component
-let make = () =>
-  <div>
-    <Message msg="DSAHDUISA" />
-  </div>
+let make = () => <>
+  <Message msg="foo" />
+  <MessageOptional message="Test" id="idTest" />
+  <MessageDefaultValue />
+  <ComponentWithChildren> {"Hello from children"->React.string} </ComponentWithChildren>
+  <MessageIsLoading isLoading=true />
+  <MessageArrayComponent />
+  <MessageWithRenderMap />
+</>
